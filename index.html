@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>FIRE Calculator</title>
+
+  <link rel="stylesheet" href="css/uikit.min.css" />
+  <link rel="stylesheet" href="css/app.css" />
+  <script src="js/moon.min.js"></script>
+  <script src="js/uikit.min.js"></script>
+</head>
+<body>
+  <div id="fireapp" class="uk-light">
+    <div class="uk-margin uk-card uk-card-secondary uk-card-body">
+      <div class="uk-flex uk-flex-column uk-flex-middle">
+        <div class="uk-margin-bottom">
+          <p class="uk-text-lead uk-text-center">
+            FIRE Calculator
+          </p>
+          
+          <div class="uk-flex uk-flex-wrap uk-flex-center">
+            <div class="uk-flex uk-flex-middle">
+              <label
+                class="uk-form-label uk-form-width-small uk-text-right  uk-margin-xsmall-right"
+                uk-tooltip="Currently invested total savings.">
+                Current savings
+              </label>
+              <input
+                m-model="currentSavings"
+                class="uk-input uk-form-width-small uk-text-right uk-margin-right"
+                type="number" />
+            </div>
+
+            <div class="uk-flex uk-flex-middle">
+              <label
+                class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"
+                uk-tooltip="Amount which gets added every month. To be on the safe side (using a conservative estimate), the interim return is not included in calculation.">
+                Monthly savings
+              </label>
+              <input
+                m-model="monthlySavings"
+                class="uk-input uk-form-width-small uk-text-right uk-margin-right"
+                type="number" />
+            </div>
+
+            <div class="uk-flex uk-flex-middle">
+              <label
+                class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"
+                uk-tooltip="All additional passive extra monthly (non-interest-bearing) incomes, if present.">
+                Extra income/month
+              </label>
+              <input
+                m-model="extraMonthlyIncome"
+                class="uk-input uk-form-width-small uk-text-right uk-margin-right"
+                type="number" />
+            </div>
+          </div>
+          
+          <div class="uk-flex uk-flex-wrap uk-flex-center uk-margin-top">
+            <div class="uk-flex uk-flex-middle">
+              <label
+                class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"
+                uk-tooltip="An average expected interest rate to calculate with.">
+                Expected interest (percentage)
+              </label>
+              <input
+                m-model="expectedInterest"
+                class="uk-input uk-form-width-xsmall uk-margin-right" type="number" />
+            </div>
+
+            <div class="uk-flex uk-flex-middle">
+              <label
+                class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"
+                uk-tooltip="Expected average annual inflation rate for future years.">
+                Expected inflation (percentage)
+              </label>
+              <input
+                m-model="expectedInflation"
+                class="uk-input uk-form-width-xsmall uk-margin-right" type="number" />
+            </div>
+
+            <div class="uk-flex uk-flex-middle">
+              <label
+                class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"
+                uk-tooltip="A custom safe withdrawal rate to use for monthly income calculations.">
+                Safe withdrawal rate (percentage)
+              </label>
+              <input
+                m-model="swr"
+                class="uk-input uk-form-width-xsmall uk-margin-right" type="number" />
+            </div>
+          </div>
+        </div>
+
+        <div class="uk-flex uk-flex-column uk-flex-center uk-margin-top uk-margin-bottom">
+          <div class="uk-flex uk-flex-center uk-margin-bottom">
+            <i m-if="!currentProfile">
+              (Unsaved profile)
+            </i>
+            
+            <select
+              m-if="profiles.length"
+              class="uk-select uk-form-small"
+              m-model="currentProfile"
+              m-on:change="selectProfile">
+              <option m-for="profileData in profiles">
+                {{profileData.name}}
+              </option>
+            </select>
+          </div>
+          
+          <div class="uk-flex uk-flex-between">
+            <div>
+              <button
+                m-on:click="saveProfile()"
+                class="uk-button uk-button-default uk-button-small">
+                Save
+              </button>
+              <button
+                m-if="currentProfile"
+                m-on:click="deleteProfile()"
+                class="uk-button uk-button-danger uk-button-small uk-margin-right">
+                Delete
+              </button>
+            </div>
+            <div>
+              <button
+                m-on:click="saveJsonConfig()"
+                class="uk-button uk-button-primary uk-button-small uk-margin-left">
+                Export all
+              </button>
+              <button
+                m-on:click="loadJsonConfig()"
+                class="uk-button uk-button-secondary uk-button-small">
+                Import all
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="uk-margin-top uk-overflow-auto">
+        <table class="uk-table uk-table-small uk-table-striped">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th class="uk-text-right">Opening balance</th>
+              <th class="uk-text-right">Yearly savings</th>
+              <th class="uk-text-right">Nominal return</th>
+              <th class="uk-text-right">End-year minimum &rarr; Present value</th>
+              <th class="uk-text-right">FIRE monthly income &rarr; Present value</th>
+              <th class="uk-text-right">Total monthly income &rarr; Present value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr m-for="data, yearDiff in yearsData(yearsToLoad)">
+              <td>{{data.year}}</td>
+              <td class="uk-text-right">{{data.openingBalance}}</td>
+              <td class="uk-text-right">{{data.yearlySavings}}</td>
+              <td class="uk-text-right">{{data.nominalReturn}}</td>
+              <td class="uk-text-right">
+                <span class="uk-text-meta">{{data.endYearMin}}</span> &rarr; {{data.endYearMinPV}}
+              </td>
+              <td class="uk-text-right">
+                <span class="uk-text-meta">{{data.fireMonthly}}</span> &rarr; {{data.fireMonthlyPV}}
+              </td>
+              <td class="uk-text-right">
+                <span class="uk-text-meta">{{data.totalMonthly}}</span> &rarr; {{data.totalMonthlyPV}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="uk-flex uk-flex-center">
+          <button
+            m-on:click="loadMoreYears()"
+            class="uk-button uk-button-default uk-button-small">
+            Load more
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/index.js" charset="utf-8"></script>
+</body>
+</html>
