@@ -1,0 +1,47 @@
+{
+  "title": "FIRE kalkulátor",
+
+  "currentSavings": "Jelenlegi megtakarítás",
+  "currentSavingsExplanation": "A jelenleg befektetett teljes megtakarítás összege.",
+
+  "monthlySavings": "Havi megtakarítás",
+  "monthlySavingsExplanation": "Az az összeg, amely havonta hozzáadódik. A biztonság kedvéért (a konzervatív becslés okán) a köztes havi hozamok az aktuális évre még nincsenek beleszámítva.",
+
+  "extraIncome": "Extra bevétel / hó",
+  "extraIncomeExplanation": "Minden további passzív havi (nem kamatozó) bevétel, ha van ilyen.",
+
+  "expectedInterest": "Várható hozam (százalék)",
+  "expectedInterestExplanation": "Egy átlagos, várható hozam, amellyel a számítás történik.",
+
+  "expectedInflation": "Várható infláció (százalék)",
+  "expectedInflationExplanation": "A jövendő évekre vonatkozó, várható átlagos éves infláció.",
+
+  "safeWithdrawalRate": "Biztonságos kivonási ráta (százalék)",
+  "safeWithdrawalRateExplanation": "Egy egyedi biztonságos kivonási ráta, amelyet a havi bevétel számításához használunk.",
+
+  "unsavedProfile": "(Nem mentett profil)",
+
+  "save": "Mentés",
+  "saveExplanation": "A jelenlegi számítási adatok mentése egy helyben tárolt profilba.",
+  "delete": "Törlés",
+  "deleteExplanation": "A jelenlegi profil törlése.",
+  "export": "Export",
+  "exportExplanation": "Az összes helyben tárolt profil mentése fájlba.",
+  "import": "Import",
+  "importExplanation": "Korábban mentett profilok betöltése fájlból.",
+
+  "year": "Év",
+  "yearExplanation": "A sor adatai erre az évre vonatkoznak.",
+  "openingBalance": "Nyitóegyenleg",
+  "openingBalanceExplanation": "Az év nyitóegyenlege az előző év számításai alapján.",
+  "yearlySavings": "Éves megtakarítás",
+  "yearlySavingsExplanation": "A havi megtakarításokból származó éves összeg. (Erre az összegre nincs időközi hozam számítva, csak a következő éveknél.)",
+  "nominalReturn": "Nominális hozam",
+  "nominalReturnExplanation": "Az adott év nominális hozama, kizárólag a nyitó egyenlegre számítva.",
+  "endYearMinimum": "Év végi minimum > Jelenérték",
+  "endYearMinimumExplanation": "Az év végére számított minimális egyenleg és annak jelenértéke.",
+  "fireMonthlyIncome": "FIRE havi bevétel > Jelenérték",
+  "fireMonthlyIncomeExplanation": "A minimális év végi egyenleg alapján számított havi bevétel és annak jelenértéke.",
+  "totalMonthlyIncome": "Teljes havi bevétel > Jelenérték",
+  "totalMonthlyIncomeExplanation": "A minimális év végi egyenleg alapján számított havi bevétel (extra havi bevétellel együtt), és annak jelenértéke."
+}

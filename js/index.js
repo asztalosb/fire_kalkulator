@@ -8,9 +8,16 @@ const FORM_DEFAULTS = {
 }
 const DEFAULT_TABLE_YEARS = 10;
 
+const DEFAULT_LANGUAGE = "en";
+const AVAILABLE_LANGUAGES = ['en', 'hu'];
+const TRANSLATIONS = {};
+
 let fireApp = new Moon({
   el: '#fireapp',
   data: {
+    labels: {},
+    currentLanguage: DEFAULT_LANGUAGE,
+
     currentSavings: FORM_DEFAULTS.CURRENT_SAVINGS,
     expectedInterest: FORM_DEFAULTS.EXPECTED_INTEREST,
     expectedInflation: FORM_DEFAULTS.EXPECTED_INFLATION,
@@ -23,7 +30,18 @@ let fireApp = new Moon({
     currentProfile: undefined,
   },
   hooks: {
-    init: function () {
+    init: async function () {
+      // Load translations
+      for (const language of AVAILABLE_LANGUAGES) {
+        await fetch(`./js/lang/${language}.json`)
+        .then(res => res.json())
+        .then(data => {
+          TRANSLATIONS[language] = data;
+        });
+      }
+      this.callMethod('setLanguage', [DEFAULT_LANGUAGE]);
+
+      // Load saved profiles
       const profiles = JSON.parse(localStorage.getItem("fireProfiles") || "[]");
       this.set("profiles", profiles);
 
@@ -39,6 +57,13 @@ let fireApp = new Moon({
 
   },
   methods: {
+    setLanguage: function (newLanguage) {
+      this.set("labels", TRANSLATIONS[newLanguage]);
+      this.set("currentLanguage", newLanguage);
+    },
+    t: function (label) {
+      return this.get("labels")?.[label];
+    },
     selectProfile: function (pn) {
       const profileName = pn?.target?.value ?? pn;
       if(!profileName) {

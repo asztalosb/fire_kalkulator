@@ -13,19 +13,33 @@
 </head>
 <body>
   <div id="fireapp" class="uk-light">
-    <div class="uk-margin uk-card uk-card-secondary uk-card-body">
+    <div class="uk-card uk-card-secondary uk-card-body">
       <div class="uk-flex uk-flex-column uk-flex-middle">
         <div class="uk-margin-bottom">
-          <p class="uk-text-lead uk-text-center">
-            FIRE Calculator
-          </p>
+          <div class="uk-flex uk-flex-center uk-flex-middle uk-margin-bottom">
+            <span class="uk-text-lead uk-margin-right">
+              {{ t('title') }}
+            </span>
+            <img
+              m-if="currentLanguage!='en'"
+              m-on:click="setLanguage('en')"
+              src="https://flagcdn.com/gb.svg"
+              width="20"
+              alt="English">
+            <img
+              m-if="currentLanguage!='hu'"
+              m-on:click="setLanguage('hu')"
+              src="https://flagcdn.com/hu.svg"
+              width="20"
+              alt="Magyar">
+          </div>
           
           <div class="uk-flex uk-flex-wrap uk-flex-center">
             <div class="uk-flex uk-flex-middle">
               <label
                 class="uk-form-label uk-form-width-small uk-text-right  uk-margin-xsmall-right"
-                uk-tooltip="Currently invested total savings.">
-                Current savings
+                uk-tooltip="{{ t('currentSavingsExplanation') }}">
+                {{ t('currentSavings') }}
               </label>
               <input
                 m-model="currentSavings"
@@ -36,8 +50,8 @@
             <div class="uk-flex uk-flex-middle">
               <label
                 class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"
-                uk-tooltip="Amount which gets added every month. To be on the safe side (using a conservative estimate), the interim return is not included in calculation.">
-                Monthly savings
+                uk-tooltip="{{ t('monthlySavingsExplanation') }}">
+                {{ t('monthlySavings') }}
               </label>
               <input
                 m-model="monthlySavings"
@@ -48,8 +62,8 @@
             <div class="uk-flex uk-flex-middle">
               <label
                 class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"
-                uk-tooltip="All additional passive extra monthly (non-interest-bearing) incomes, if present.">
-                Extra income/month
+                uk-tooltip="{{ t('extraIncomeExplanation') }}">
+                {{ t('extraIncome') }}
               </label>
               <input
                 m-model="extraMonthlyIncome"
@@ -62,8 +76,8 @@
             <div class="uk-flex uk-flex-middle">
               <label
                 class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"
-                uk-tooltip="An average expected interest rate to calculate with.">
-                Expected interest (percentage)
+                uk-tooltip="{{ t('expectedInterestExplanation') }}">
+                {{ t('expectedInterest') }}
               </label>
               <input
                 m-model="expectedInterest"
@@ -73,8 +87,8 @@
             <div class="uk-flex uk-flex-middle">
               <label
                 class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"
-                uk-tooltip="Expected average annual inflation rate for future years.">
-                Expected inflation (percentage)
+                uk-tooltip="{{ t('expectedInflationExplanation') }}">
+                {{ t('expectedInflation') }}
               </label>
               <input
                 m-model="expectedInflation"
@@ -84,8 +98,8 @@
             <div class="uk-flex uk-flex-middle">
               <label
                 class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"
-                uk-tooltip="A custom safe withdrawal rate to use for monthly income calculations.">
-                Safe withdrawal rate (percentage)
+                uk-tooltip="{{ t('safeWithdrawalRateExplanation') }}">
+                {{ t('safeWithdrawalRate') }}
               </label>
               <input
                 m-model="swr"
@@ -95,9 +109,9 @@
         </div>
 
         <div class="uk-flex uk-flex-column uk-flex-center uk-margin-top uk-margin-bottom">
-          <div class="uk-flex uk-flex-center uk-margin-bottom">
+          <div class="uk-flex uk-flex-center">
             <i m-if="!currentProfile">
-              (Unsaved profile)
+              {{ t('unsavedProfile') }}
             </i>
             
             <select
@@ -115,26 +129,31 @@
             <div>
               <button
                 m-on:click="saveProfile()"
+                uk-tooltip="{{ t('saveExplanation') }}"
                 class="uk-button uk-button-default uk-button-small">
-                Save
+                {{ t('save') }}
               </button>
               <button
                 m-if="currentProfile"
                 m-on:click="deleteProfile()"
+                uk-tooltip="{{ t('deleteExplanation') }}"
                 class="uk-button uk-button-danger uk-button-small uk-margin-right">
-                Delete
+                {{ t('delete') }}
               </button>
             </div>
             <div>
               <button
+                m-if="profiles.length"
                 m-on:click="saveJsonConfig()"
+                uk-tooltip="{{ t('exportExplanation') }}"
                 class="uk-button uk-button-primary uk-button-small uk-margin-left">
-                Export all
+                {{ t('export') }}
               </button>
               <button
                 m-on:click="loadJsonConfig()"
+                uk-tooltip="{{ t('importExplanation') }}"
                 class="uk-button uk-button-secondary uk-button-small">
-                Import all
+                {{ t('import') }}
               </button>
             </div>
           </div>
@@ -145,13 +164,13 @@
         <table class="uk-table uk-table-small uk-table-striped">
           <thead>
             <tr>
-              <th>Year</th>
-              <th class="uk-text-right">Opening balance</th>
-              <th class="uk-text-right">Yearly savings</th>
-              <th class="uk-text-right">Nominal return</th>
-              <th class="uk-text-right">End-year minimum &rarr; Present value</th>
-              <th class="uk-text-right">FIRE monthly income &rarr; Present value</th>
-              <th class="uk-text-right">Total monthly income &rarr; Present value</th>
+              <th uk-tooltip="{{ t('yearExplanation') }}">{{ t('year') }}</th>
+              <th uk-tooltip="{{ t('openingBalanceExplanation') }}" class="uk-text-right">{{ t('openingBalance') }}</th>
+              <th uk-tooltip="{{ t('yearlySavingsExplanation') }}" class="uk-text-right">{{ t('yearlySavings') }}</th>
+              <th uk-tooltip="{{ t('nominalReturnExplanation') }}" class="uk-text-right">{{ t('nominalReturn') }}</th>
+              <th uk-tooltip="{{ t('endYearMinimumExplanation') }}" class="uk-text-right">{{ t('endYearMinimum') }}</th>
+              <th uk-tooltip="{{ t('fireMonthlyIncomeExplanation') }}" class="uk-text-right">{{ t('fireMonthlyIncome') }}</th>
+              <th m-if="extraMonthlyIncome != 0" uk-tooltip="{{ t('totalMonthlyIncomeExplanation') }}" class="uk-text-right">{{ t('totalMonthlyIncome') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -166,7 +185,7 @@
               <td class="uk-text-right">
                 <span class="uk-text-meta">{{data.fireMonthly}}</span> &rarr; {{data.fireMonthlyPV}}
               </td>
-              <td class="uk-text-right">
+              <td m-if="extraMonthlyIncome != 0" class="uk-text-right">
                 <span class="uk-text-meta">{{data.totalMonthly}}</span> &rarr; {{data.totalMonthlyPV}}
               </td>
             </tr>

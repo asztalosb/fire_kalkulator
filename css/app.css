@@ -1,12 +1,9 @@
 html, body {
-    margin: 0;
-    padding: 0;
-    max-width: 100vw;
-    min-height: 100vh;
-    background-color: #222;
-}
-.uk-margin {
-    margin: 0 !important;
+  margin: 0;
+  padding: 0;
+  max-width: 100vw;
+  min-height: 100vh;
+  background-color: #222;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
