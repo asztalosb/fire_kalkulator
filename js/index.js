@@ -204,23 +204,23 @@ let fireApp = new Moon({
           openingBalance += compoundInterestByYear(yearlySavings, j);
         }
           
-        const nominalReturn = openingBalance * +this.get('expectedInterest') / 100;
-        const endYearMin = openingBalance + yearlySavings + nominalReturn;
+        const yearlyYields = openingBalance * +this.get('expectedInterest') / 100;
+        const endYearMin = openingBalance + yearlySavings + yearlyYields;
         const endYearMinPV = inflationCorrection(endYearMin, i);
-        const fireMonthly = endYearMin * +this.get('swr') / 100 / 12;
-        const fireMonthlyPV = inflationCorrection(fireMonthly, i);
-        const totalMonthly = fireMonthly + +this.get('extraMonthlyIncome');
+        const monthlyFire = endYearMin * +this.get('swr') / 100 / 12;
+        const monthlyFirePV = inflationCorrection(monthlyFire, i);
+        const totalMonthly = monthlyFire + +this.get('extraMonthlyIncome');
         const totalMonthlyPV = inflationCorrection(totalMonthly, i);
 
         return {
           year,
           openingBalance: formatValue(openingBalance),
           yearlySavings: formatValue(yearlySavings),
-          nominalReturn: formatValue(nominalReturn),
+          yearlyYields: formatValue(yearlyYields),
           endYearMin: formatValue(endYearMin),
           endYearMinPV: formatValue(endYearMinPV),
-          fireMonthly: formatValue(fireMonthly),
-          fireMonthlyPV: formatValue(fireMonthlyPV),
+          monthlyFire: formatValue(monthlyFire),
+          monthlyFirePV: formatValue(monthlyFirePV),
           totalMonthly: formatValue(totalMonthly),
           totalMonthlyPV: formatValue(totalMonthlyPV)
         };

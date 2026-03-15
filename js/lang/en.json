@@ -1,5 +1,7 @@
 {
-  "title": "FIRE Calculator",
+  "titleFire": "FIRE",
+  "titleFireLink": "https://en.wikipedia.org/wiki/FIRE_movement",
+  "titleCalculator": "Calculator",
 
   "currentSavings": "Current savings",
   "currentSavingsExplanation": "Currently invested total savings.",
@@ -17,7 +19,7 @@
   "expectedInflationExplanation": "Expected average annual inflation rate for future years.",
 
   "safeWithdrawalRate": "Safe withdrawal rate (percentage)",
-  "safeWithdrawalRateExplanation": "A custom safe withdrawal rate to use for monthly income calculations.",
+  "safeWithdrawalRateExplanation": "A custom safe withdrawal rate to use for monthly passive income calculations.",
 
   "unsavedProfile": "(Unsaved profile)",
 
@@ -30,18 +32,16 @@
   "import": "Import",
   "importExplanation": "Load new profiles from a previously saved file.",
 
-  "year": "Year",
-  "yearExplanation": "Row data represents this year.",
   "openingBalance": "Opening balance",
   "openingBalanceExplanation": "Opening balance of the year according to previous year's calculations.",
-  "yearlySavings": "Yearly savings",
+  "yearlySavings": "Savings",
   "yearlySavingsExplanation": "Total savings for this year, from monthly savings. Please note that interim return is not calculated for this amount, only for years after.",
-  "nominalReturn": "Nominal return",
-  "nominalReturnExplanation": "A nominal return for this year, calculated for the opening balance only.",
-  "endYearMinimum": "End-year minimum > Present value",
+  "yearlyYields": "Yields",
+  "yearlyYieldsExplanation": "A nominal yield sum for this year, calculated for the opening balance only.",
+  "endYearMinimum": "End-year minimum → Present value",
   "endYearMinimumExplanation": "The calculated minimum balance for the end of this year, and its present value",
-  "fireMonthlyIncome": "FIRE monthly income > Present value",
-  "fireMonthlyIncomeExplanation": "A calculated monthly income according to the end-year minimum balance, and its present value",
-  "totalMonthlyIncome": "Total monthly income > Present value",
+  "monthlyFireIncome": "Monthly FIRE income → Present value",
+  "monthlyFireIncomeExplanation": "A calculated monthly income according to the end-year minimum balance, and its present value",
+  "totalMonthlyIncome": "Total monthly income → Present value",
   "totalMonthlyIncomeExplanation": "A calculated monthly income according to the end-year minimum balance (with extra monthly income added), and its present value"
 }

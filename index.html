@@ -18,7 +18,7 @@
         <div class="uk-margin-bottom">
           <div class="uk-flex uk-flex-center uk-flex-middle uk-margin-bottom">
             <span class="uk-text-lead uk-margin-right">
-              {{ t('title') }}
+              <a href="{{ t('titleFireLink') }}" target="_blank">{{ t('titleFire') }}</a> {{ t('titleCalculator') }}
             </span>
             <img
               m-if="currentLanguage!='en'"
@@ -164,12 +164,12 @@
         <table class="uk-table uk-table-small uk-table-striped">
           <thead>
             <tr>
-              <th uk-tooltip="{{ t('yearExplanation') }}">{{ t('year') }}</th>
+              <th></th>
               <th uk-tooltip="{{ t('openingBalanceExplanation') }}" class="uk-text-right">{{ t('openingBalance') }}</th>
               <th uk-tooltip="{{ t('yearlySavingsExplanation') }}" class="uk-text-right">{{ t('yearlySavings') }}</th>
-              <th uk-tooltip="{{ t('nominalReturnExplanation') }}" class="uk-text-right">{{ t('nominalReturn') }}</th>
+              <th uk-tooltip="{{ t('yearlyYieldsExplanation') }}" class="uk-text-right">{{ t('yearlyYields') }}</th>
               <th uk-tooltip="{{ t('endYearMinimumExplanation') }}" class="uk-text-right">{{ t('endYearMinimum') }}</th>
-              <th uk-tooltip="{{ t('fireMonthlyIncomeExplanation') }}" class="uk-text-right">{{ t('fireMonthlyIncome') }}</th>
+              <th uk-tooltip="{{ t('monthlyFireIncomeExplanation') }}" class="uk-text-right">{{ t('monthlyFireIncome') }}</th>
               <th m-if="extraMonthlyIncome != 0" uk-tooltip="{{ t('totalMonthlyIncomeExplanation') }}" class="uk-text-right">{{ t('totalMonthlyIncome') }}</th>
             </tr>
           </thead>
@@ -178,12 +178,12 @@
               <td>{{data.year}}</td>
               <td class="uk-text-right">{{data.openingBalance}}</td>
               <td class="uk-text-right">{{data.yearlySavings}}</td>
-              <td class="uk-text-right">{{data.nominalReturn}}</td>
+              <td class="uk-text-right">{{data.yearlyYields}}</td>
               <td class="uk-text-right">
                 <span class="uk-text-meta">{{data.endYearMin}}</span> &rarr; {{data.endYearMinPV}}
               </td>
               <td class="uk-text-right">
-                <span class="uk-text-meta">{{data.fireMonthly}}</span> &rarr; {{data.fireMonthlyPV}}
+                <span class="uk-text-meta">{{data.monthlyFire}}</span> &rarr; {{data.monthlyFirePV}}
               </td>
               <td m-if="extraMonthlyIncome != 0" class="uk-text-right">
                 <span class="uk-text-meta">{{data.totalMonthly}}</span> &rarr; {{data.totalMonthlyPV}}
