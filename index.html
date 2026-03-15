@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   
   <title>FIRE Calculator</title>
 
@@ -36,37 +37,28 @@
           
           <div class="uk-flex uk-flex-wrap uk-flex-center">
             <div class="uk-flex uk-flex-middle">
-              <label
-                class="uk-form-label uk-form-width-small uk-text-right  uk-margin-xsmall-right"
-                uk-tooltip="{{ t('currentSavingsExplanation') }}">
-                {{ t('currentSavings') }}
-              </label>
+              <label class="uk-form-label uk-form-width-small uk-text-right  uk-margin-xsmall-right"> {{ t('currentSavings') }} </label>
               <input
                 m-model="currentSavings"
+                uk-tooltip="{{ t('currentSavingsExplanation') }}"
                 class="uk-input uk-form-width-small uk-text-right uk-margin-right"
                 type="number" />
             </div>
 
             <div class="uk-flex uk-flex-middle">
-              <label
-                class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"
-                uk-tooltip="{{ t('monthlySavingsExplanation') }}">
-                {{ t('monthlySavings') }}
-              </label>
+              <label class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"> {{ t('monthlySavings') }} </label>
               <input
                 m-model="monthlySavings"
+                uk-tooltip="{{ t('monthlySavingsExplanation') }}"
                 class="uk-input uk-form-width-small uk-text-right uk-margin-right"
                 type="number" />
             </div>
 
             <div class="uk-flex uk-flex-middle">
-              <label
-                class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"
-                uk-tooltip="{{ t('extraIncomeExplanation') }}">
-                {{ t('extraIncome') }}
-              </label>
+              <label class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"> {{ t('extraIncome') }} </label>
               <input
                 m-model="extraMonthlyIncome"
+                uk-tooltip="{{ t('extraIncomeExplanation') }}"
                 class="uk-input uk-form-width-small uk-text-right uk-margin-right"
                 type="number" />
             </div>
@@ -74,35 +66,26 @@
           
           <div class="uk-flex uk-flex-wrap uk-flex-center uk-margin-top">
             <div class="uk-flex uk-flex-middle">
-              <label
-                class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"
-                uk-tooltip="{{ t('expectedInterestExplanation') }}">
-                {{ t('expectedInterest') }}
-              </label>
+              <label class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"> {{ t('expectedInterest') }} </label>
               <input
                 m-model="expectedInterest"
+                uk-tooltip="{{ t('expectedInterestExplanation') }}"
                 class="uk-input uk-form-width-xsmall uk-margin-right" type="number" />
             </div>
 
             <div class="uk-flex uk-flex-middle">
-              <label
-                class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"
-                uk-tooltip="{{ t('expectedInflationExplanation') }}">
-                {{ t('expectedInflation') }}
-              </label>
+              <label class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"> {{ t('expectedInflation') }} </label>
               <input
                 m-model="expectedInflation"
+                uk-tooltip="{{ t('expectedInflationExplanation') }}"
                 class="uk-input uk-form-width-xsmall uk-margin-right" type="number" />
             </div>
 
             <div class="uk-flex uk-flex-middle">
-              <label
-                class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"
-                uk-tooltip="{{ t('safeWithdrawalRateExplanation') }}">
-                {{ t('safeWithdrawalRate') }}
-              </label>
+              <label class="uk-form-label uk-form-width-small uk-text-right uk-margin-xsmall-right"> {{ t('safeWithdrawalRate') }} </label>
               <input
                 m-model="swr"
+                uk-tooltip="{{ t('safeWithdrawalRateExplanation') }}"
                 class="uk-input uk-form-width-xsmall uk-margin-right" type="number" />
             </div>
           </div>
@@ -110,9 +93,7 @@
 
         <div class="uk-flex uk-flex-column uk-flex-center uk-margin-top uk-margin-bottom">
           <div class="uk-flex uk-flex-center">
-            <i m-if="!currentProfile">
-              {{ t('unsavedProfile') }}
-            </i>
+            <i m-if="!currentProfile"> {{ t('unsavedProfile') }} </i>
             
             <select
               m-if="profiles.length"
