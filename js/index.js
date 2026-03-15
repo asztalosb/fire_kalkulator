@@ -39,7 +39,8 @@ let fireApp = new Moon({
           TRANSLATIONS[language] = data;
         });
       }
-      this.callMethod('setLanguage', [DEFAULT_LANGUAGE]);
+      var browserLanguage = navigator.languages?.[0]?.substring(0,2) ?? navigator.language?.substring(0,2);
+      this.callMethod('setLanguage', [AVAILABLE_LANGUAGES.indexOf(browserLanguage) != -1 ? browserLanguage : DEFAULT_LANGUAGE]);
 
       // Load saved profiles
       const profiles = JSON.parse(localStorage.getItem("fireProfiles") || "[]");
