@@ -143,16 +143,15 @@
 
       <div m-if="portfolioEtfValue" class="uk-flex uk-flex-wrap uk-flex-center">
         <div>
-          <span class="uk-margin-right">{{ t('portfolioValue') }}</span>
+          <span class="uk-text-small uk-text-bold">{{ t('portfolioValue') }}</span>
           <span class="uk-text-large uk-margin-right">{{ formatValue(portfolioEtfValue + portfolioExtraValue) }} Ft</span>
         </div>
         <div>
-          <span class="uk-margin-left">{{ t('eurHufValue') }}</span>
-          <span class="uk-margin-right">{{ formatValue(eurHufRate) }} Ft</span>
+          <span class="uk-margin-left uk-margin-right">{{ t('eurHufValue') }}{{ formatValue(eurHufRate) }} Ft</span>
         </div>
         <div>
-          <span class="uk-margin-left uk-margin-right">{{ t('fireValue') }}</span>
-          <span class="uk-text-large">{{ formatValue(getPortfolioFireAmount() + +extraMonthlyIncome) }} Ft</span>
+          <span class="uk-text-small uk-text-bold uk-margin-left">{{ t('fireValue') }}</span>
+          <span class="uk-text-large uk-text-bold">{{ formatValue(getPortfolioFireAmount() + +extraMonthlyIncome) }} Ft</span>
         </div>
       </div>
 
