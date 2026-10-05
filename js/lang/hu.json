@@ -32,6 +32,10 @@
   "import": "Import",
   "importExplanation": "Korábban mentett profilok betöltése fájlból.",
 
+  "portfolioValue": "Portfolió értéke",
+  "eurHufValue": "1€=",
+  "fireValue": "FIRE érték",
+
   "openingBalance": "Nyitóegyenleg",
   "openingBalanceExplanation": "Az év nyitóegyenlege az előző év számításai alapján.",
   "yearlySavings": "Megtakarítás",

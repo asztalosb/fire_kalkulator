@@ -28,6 +28,10 @@ let fireApp = new Moon({
     yearsToLoad: DEFAULT_TABLE_YEARS,
     profiles: [],
     currentProfile: undefined,
+
+    eurHufRate: undefined,
+    portfolioEtfValue: 0,
+    portfolioExtraValue: 0
   },
   hooks: {
     init: async function () {
@@ -54,6 +58,9 @@ let fireApp = new Moon({
         // No profiles saved yet
         this.set("currentProfile", undefined);
       }
+
+      // Get portfolio value
+      this.callMethod('getPortfolioEtfValue');
     }
 
   },
@@ -64,6 +71,61 @@ let fireApp = new Moon({
     },
     t: function (label) {
       return this.get("labels")?.[label];
+    },
+    getPortfolioEtfValue: function () {
+      const ETF_ID_MAP = {
+        VVSM: "1ef0232c-cd91-6339-8fa7-c7989f8b2ae2",
+        QDVE: "1ef27f9a-bde6-6dda-a873-3946ca86bd5c",
+        VWCE: "1eda0a07-10b3-63e0-b568-6deedaa217e7",
+        C6E:  "1ed01f90-291c-6392-874c-8748b6aff51a"
+      };
+
+      async function fetchEurHufRate() {
+        const url = "https://api.frankfurter.dev/v2/rates?base=eur&quotes=huf";
+        const response = await fetch(url);
+        const data = await response.json();
+        return data[0].rate;
+      }
+
+      async function fetchEtfPrice(etfId) {
+        const url = `https://lightyear.com/site-api/public/v1/market-data/${etfId}/price`;
+        const response = await fetch(url);
+        const data = await response.json();
+        return data.price;
+      }
+
+      async function getETFValueFromQuery() {
+        const params = new URLSearchParams(window.location.search);
+        const eurHuf = await fetchEurHufRate();
+        let totalHuf = 0;
+        const details = {};
+
+        const extraHuf = params.get("extra") ? parseFloat(params.get("extra")) : 0;
+
+        for (const [symbol, amountStr] of params.entries()) {
+          const amount = parseFloat(amountStr);
+          if (isNaN(amount)) continue;
+
+          const etfId = ETF_ID_MAP[symbol];
+          if (!etfId) continue;
+
+          const priceEur = await fetchEtfPrice(etfId);
+          const priceHuf = priceEur * eurHuf;
+          const valueHuf = priceHuf * amount;
+
+          details[symbol] = { amount, priceEur, priceHuf, valueHuf };
+
+          totalHuf += valueHuf;
+        }
+
+        return { eurHuf, totalHuf, extraHuf, details };
+      }
+
+      getETFValueFromQuery().then(result => {
+        this.set("eurHufRate", result.eurHuf);
+        this.set("portfolioEtfValue", result.totalHuf);
+        this.set("portfolioExtraValue", result.extraHuf);
+      });
     },
     selectProfile: function (pn) {
       const profileName = pn?.target?.value ?? pn;
@@ -192,8 +254,6 @@ let fireApp = new Moon({
       const compoundInterestByYear = (amount, years) =>
         amount * Math.pow(1 + this.get('expectedInterest') / 100, years);
 
-      const formatValue = value => Intl.NumberFormat("hu-HU", { maximumFractionDigits: 0 }).format(value);
-
       return Array.from({length: range}, (_, i) => {
         const year = new Date().getFullYear() + i;
 
@@ -214,21 +274,29 @@ let fireApp = new Moon({
 
         return {
           year,
-          openingBalance: formatValue(openingBalance),
-          yearlySavings: formatValue(yearlySavings),
-          yearlyYields: formatValue(yearlyYields),
-          endYearMin: formatValue(endYearMin),
-          endYearMinPV: formatValue(endYearMinPV),
-          monthlyFire: formatValue(monthlyFire),
-          monthlyFirePV: formatValue(monthlyFirePV),
-          totalMonthly: formatValue(totalMonthly),
-          totalMonthlyPV: formatValue(totalMonthlyPV)
+          openingBalance: this.callMethod("formatValue", [openingBalance]),
+          yearlySavings: this.callMethod("formatValue", [yearlySavings]),
+          yearlyYields: this.callMethod("formatValue", [yearlyYields]),
+          endYearMin: this.callMethod("formatValue", [endYearMin]),
+          endYearMinPV: this.callMethod("formatValue", [endYearMinPV]),
+          monthlyFire: this.callMethod("formatValue", [monthlyFire]),
+          monthlyFirePV: this.callMethod("formatValue", [monthlyFirePV]),
+          totalMonthly: this.callMethod("formatValue", [totalMonthly]),
+          totalMonthlyPV: this.callMethod("formatValue", [totalMonthlyPV])
         };
       });
     },
 
+    getPortfolioFireAmount: function () {
+      return (this.get("portfolioEtfValue") + this.get("portfolioExtraValue")) * this.get("swr")/100 / 12;
+    },
+
     loadMoreYears: function () {
       this.set('yearsToLoad', this.get('yearsToLoad') + 5);
+    },
+
+    formatValue: function (value) {
+      return Intl.NumberFormat("hu-HU", { maximumFractionDigits: 0 }).format(value);
     }
   }
 });

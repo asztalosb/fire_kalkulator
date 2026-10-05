@@ -32,6 +32,10 @@
   "import": "Import",
   "importExplanation": "Load new profiles from a previously saved file.",
 
+  "portfolioValue": "Portfolio value",
+  "eurHufValue": "1€=",
+  "fireValue": "FIRE value",
+
   "openingBalance": "Opening balance",
   "openingBalanceExplanation": "Opening balance of the year according to previous year's calculations.",
   "yearlySavings": "Savings",
